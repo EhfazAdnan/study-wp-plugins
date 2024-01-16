@@ -111,9 +111,39 @@ add_action('wp_head', 'test_hook');
  * WordPress shortcode example with adnan-slide
  */
 function adnan_slider_shortcode(){
+   $args = [
+       'post_type'     => 'adnan-slider',
+       'posts_per_page' => -1
+   ];
+   $query = new WP_Query($args);
 
+   $html = '<div class="adnan-slider">';
+
+      while($query->have_posts()) : $query->the_post();
+         $html .= '<h2>'.get_the_title().'</h2>';
+      endwhile; wp_reset_query();
+
+   $html .= '</div>';
+
+   return $html;
 }
 add_shortcode('adnan-slider', 'adnan_slider_shortcode');
+
+
+function google_link(){
+    return '<div>Search on <a href="https://google.com/">GooGle</a></div>';
+}
+add_shortcode('google-button', 'google_link');
+
+function adnan_slider_plugin_assets(){
+    $plugin_dir_url = plugin_dir_url(__FILE__);
+
+    wp_enqueue_style('adnan-slider-slick', $plugin_dir_url.'assets/css/slick.css');
+    wp_enqueue_script('adnan-slider-slick', $plugin_dir_url.'assets/js/slick.min.js', ['jquery'], '1.0', true);
+    wp_enqueue_script('adnan-slider-main', $plugin_dir_url.'assets/js/index.js');
+}
+
+add_action('wp_enqueue_scripts', 'adnan_slider_plugin_assets');
 
 ?>
 
