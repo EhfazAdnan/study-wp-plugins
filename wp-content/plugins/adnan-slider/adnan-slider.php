@@ -86,5 +86,34 @@ function delete_table(){
     $sql          = "DROP TABLE IF EXISTS " . implode( ', ', array_values( $table_names ) );
     $query_result = $wpdb->query( $sql );
 }
+?>
 
-// shortcodes
+<?php
+
+// add action example for javascript
+function hook_javascript() {
+    ?>
+        <script>
+            console.log('hook javascript runs perfectly');
+        </script>
+    <?php
+}
+add_action('wp_head', 'hook_javascript');
+
+// add action example
+function test_hook(){
+    echo 'test hook';
+}
+add_action('wp_head', 'test_hook');
+
+
+/*
+ * WordPress shortcode example with adnan-slide
+ */
+function adnan_slider_shortcode(){
+
+}
+add_shortcode('adnan-slider', 'adnan_slider_shortcode');
+
+?>
+
