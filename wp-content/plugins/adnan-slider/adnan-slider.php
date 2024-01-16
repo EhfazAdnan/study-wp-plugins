@@ -21,10 +21,11 @@ function adnan_slider_custom_post(){
     register_post_type('adnan-slider', $args);
 }
 
+// add custom post type
 add_action('init', 'adnan_slider_custom_post');
 
 /**
- * Activate the plugin.
+ * Activate the plugin (create required table).
  */
 function adnan_slider_activate() {
     adnan_slider_custom_post();
@@ -32,8 +33,13 @@ function adnan_slider_activate() {
     flush_rewrite_rules();
 }
 
+// register activation hook
 register_activation_hook( __FILE__, 'adnan_slider_activate');
 
+/**
+ * create table function
+ * @return void
+ */
 function create_tables() {
     global $wpdb;
     $charset_collate = $wpdb->get_charset_collate();
@@ -55,7 +61,7 @@ function create_tables() {
 }
 
 /**
- * Deactivation hook.
+ * Deactivation hook (drop plugin tables).
  */
 function adnan_slider_deactivate() {
     unregister_post_type( 'adnan-slider');
@@ -63,8 +69,13 @@ function adnan_slider_deactivate() {
     flush_rewrite_rules();
 }
 
+// register deactivation hook
 register_deactivation_hook( __FILE__, 'adnan_slider_deactivate' );
 
+/**
+ * drop table function
+ * @return void
+ */
 function delete_table(){
     global $wpdb;
     $test_table = $wpdb->prefix . 'adnanslider';
